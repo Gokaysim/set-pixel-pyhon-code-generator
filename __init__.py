@@ -1,0 +1,1 @@
+frame_delay_amount = 4000
