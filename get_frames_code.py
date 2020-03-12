@@ -14,7 +14,31 @@ def get_frames_code(frames):
             index += 1
         endOfFramePixelIndex.append(index)
 
-    animations_str = 'const char included_animations[] = {'
+    animation_letter_count = []
+
+    for animation in animations_dict["animations"]:
+        i = 0
+        for letter in animation:
+            i += 1
+        animation_letter_count.append(i)
+
+    print(animation_letter_count)
+
+    animation_quantity = len(animation_letter_count)
+
+    animation_length_str = 'const int animation_name_length[{}] = '.format(animation_quantity)
+    animation_length_str += '{'
+
+    for length in animation_letter_count:
+        animation_length_str += str(length) + ', '
+
+    animation_length_str = animation_length_str[:-2]
+    animation_length_str += '};'
+
+    print(animation_length_str)
+
+    animations_str = 'const char included_animations[{}][{}] = '.format(animation_quantity, max(animation_letter_count))
+    animations_str += '{'
     dict_length = len(animations_dict["animations"])
 
     for i in range(dict_length):
@@ -69,6 +93,7 @@ def get_frames_code(frames):
         animation_end_str += ", "
     animation_end_str = animation_end_str[:-2]
     animation_end_str += "};"
-    # print(animation_end_str)
 
-    return "\n" + changedPixels + "\n" + endOfFramePixel + "\n" + totalStr + "\n" + animations_str + "\n" + animation_end_str + "\n"
+    print(animation_end_str)
+
+    return "\n" + changedPixels + "\n" + endOfFramePixel + "\n" + totalStr + "\n" + animations_str + "\n" + animation_length_str + "\n" + animation_end_str + "\n"
