@@ -52,7 +52,13 @@ def get_frames_code(frames):
     changedPixels = changedPixels[:-1]    # to delete the comma at the end of the last pixel
     changedPixels += "};"
 
-    endOfFramePixel = "const int endOfFramePixelIndex[] = {"
+    frame_count = 0
+
+    for each_frame in endOfFramePixelIndex:
+        frame_count += 1
+
+    endOfFramePixel = "const int endOfFramePixelIndex[{}] = ".format(frame_count)
+    endOfFramePixel += '{'
     for i in endOfFramePixelIndex:
         endOfFramePixel += str(i) + ", "
 
@@ -96,4 +102,7 @@ def get_frames_code(frames):
 
     print(animation_end_str)
 
-    return "\n" + changedPixels + "\n" + endOfFramePixel + "\n" + totalStr + "\n" + animations_str + "\n" + animation_length_str + "\n" + animation_end_str + "\n"
+    number_of_frames = "short number_of_frames = {}".format(frame_count)
+    number_of_animations = "short number_of_animations = {}".format(animation_quantity)
+
+    return "\n" + changedPixels + "\n" + endOfFramePixel + "\n" + totalStr + "\n" + animations_str + "\n" + animation_length_str + "\n" + animation_end_str + "\n" + number_of_frames + "\n" + number_of_animations
