@@ -102,7 +102,19 @@ def get_frames_code(frames):
 
     print(animation_end_str)
 
-    number_of_frames = "short number_of_frames = {}".format(frame_count)
-    number_of_animations = "short number_of_animations = {}".format(animation_quantity)
+    number_of_frames = "short number_of_frames = {};".format(frame_count)
+    number_of_animations = "short number_of_animations = {};".format(animation_quantity)
 
-    return "\n" + changedPixels + "\n" + endOfFramePixel + "\n" + totalStr + "\n" + animations_str + "\n" + animation_length_str + "\n" + animation_end_str + "\n" + number_of_frames + "\n" + number_of_animations
+    animation_details = ""
+
+    for a in range(1, animation_quantity + 1):
+        animation_details += "\nanimationTypes animation{0} = ".format(a)
+        animation_details += "{.animation_order = "
+        animation_details += "{0},".format(a)
+        if a == 1:
+            animation_details += "\n\t\t\t\t\t\t\t .animation_start_point = 0,"
+        else:
+            animation_details += "\n\t\t\t\t\t\t\t .animation_start_point = {},".format(animation_end[a - 2] + 1)
+        animation_details += "\n\t\t\t\t\t\t\t .animation_end_point = {}".format(animation_end[a - 1])
+        animation_details += "};\n"
+    return "\n" + changedPixels + "\n" + endOfFramePixel + "\n" + totalStr + "\n" + animations_str + "\n" + animation_length_str + "\n" + animation_end_str + "\n" + number_of_frames + "\n" + number_of_animations + "\n" + animation_details
